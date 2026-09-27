@@ -1,3 +1,103 @@
+## Overview
+
+OnlyChat is a Next.js app that lets an Instagram professional account owner log in via
+**Instagram Business Login**, view their DM conversations, and reply from a simple web dashboard.
+Incoming messages arrive as Meta webhooks and are pushed to the browser in realtime over
+Socket.IO.
+
+## Tech stack
+
+- **Next.js 16** (App Router) + React 19, served through a custom **`server/index.js`**
+  (plain `http` server) so a **Socket.IO** server can share the same port.
+- **Zustand** for client state (`store/`): current user, conversations, webhook events.
+- **`jose`** for JWT session helpers (`store/session.ts`) — currently unused in favor of
+  an HttpOnly cookie set directly by the API route (see Architecture below).
+- **Tailwind CSS v4** for styling.
+- Instagram **Graph API** (`graph.instagram.com`) accessed via `lib/api.ts`.
+
+## Getting started
+
+1. Install dependencies (this workspace uses pnpm):
+   ```bash
+   pnpm install
+   ```
+2. Create a `.env.local` file in `chat/` with the variables from
+   [Environment variables](#environment-variables) below.
+3. Run the dev server (this starts Next.js *and* the Socket.IO server together, see `server/index.js`):
+   ```bash
+   pnpm dev
+   ```
+4. Open `http://localhost:3000` and click **Log in with Instagram**. In development, API routes
+   read `NEXT_PUBLIC_ACCESS_TOKEN` directly instead of requiring the cookie set by the OAuth
+   exchange (see `app/api/instagram/conversations/route.ts`), so you can test against a real
+   Instagram account without completing the full redirect flow.
+
+### Available scripts
+
+| Script | Description |
+| --- | --- |
+| `pnpm dev` | Builds nothing extra — runs `server/index.js`, which boots Next.js and attaches Socket.IO to the same HTTP server. |
+| `pnpm build` | `next build` for production. |
+| `pnpm start` | Runs the same custom server against the production build. |
+| `pnpm lint` | Runs ESLint. |
+| `pnpm socket-server` | Runs the **standalone** Socket.IO relay in `server/socket-server.js` (port 4000) — a leftover/alternative to the socket server embedded in `server/index.js`; not used by `pnpm dev`. |
+
+### Environment variables
+
+All variables are read server-side (in API routes) even though most are prefixed
+`NEXT_PUBLIC_*`; none are referenced from client components except non-secret ones.
+
+| Variable | Used in | Purpose |
+| --- | --- | --- |
+| `NEXT_PUBLIC_INSTAGRAM_APP_ID` | `LogIn.tsx`, `api/auth/exchange` | Instagram app's Client ID, used both to build the OAuth authorize URL and to exchange the code. |
+| `NEXT_PUBLIC_INSTAGRAM_APP_SECRET` | `api/auth/exchange`, `api/instagram/webhook` | App secret — exchanges tokens server-side and verifies webhook `X-Hub-Signature(-256)`. |
+| `NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI` | `LogIn.tsx`, `api/auth/exchange` | OAuth redirect URI registered in the Meta App Dashboard. |
+| `NEXT_PUBLIC_INSTAGRAM_SCOPE` | `LogIn.tsx` | Comma-separated Instagram permission scopes requested at login (e.g. `instagram_business_basic,instagram_business_manage_messages`). |
+| `NEXT_PUBLIC_INSTAGRAM_WEBHOOK_VERIFY_TOKEN` | `api/instagram/webhook` | Token Meta's webhook subscribe (`hub.verify_token`) request must match. |
+| `NEXT_PUBLIC_ACCESS_TOKEN` | `api/instagram/*` routes | **Dev-only override.** When `NODE_ENV=development`, API routes use this token instead of the `access_token` cookie, so you don't need to complete the OAuth redirect locally. |
+| `NEXT_PUBLIC_SOCKET_URL` | `server/index.js`, `api/instagram/webhook`, `useSocket.ts` | Origin used for Socket.IO CORS and as the `/broadcast` target the webhook route posts incoming events to. |
+| `NEXT_PUBLIC_SESSION_SECRET` | `store/session.ts` | HMAC secret for the (currently unused) JWT session helpers. |
+| `PORT` | `server/index.js` | Port for the combined Next.js + Socket.IO server (defaults to `3000`). |
+
+### Project structure
+
+```
+app/
+  page.tsx                       Landing page + login (redirects to /dashboard if already authed)
+  dashboard/                     Authenticated shell (Profile, conversation list, message thread)
+  api/auth/exchange/             OAuth code -> short-lived -> long-lived token exchange, sets cookies
+  api/instagram/conversations/   List conversations / fetch messages for one conversation
+  api/instagram/media/           Fetch the logged-in user's media
+  api/instagram/me/              Fetch profile info for the current user (and by id)
+  api/instagram/webhook/         Meta webhook verification (GET) + event receiver (POST)
+  api/instagram/webhook/events/  Reads persisted events from webhook_events.json
+components/                      UI components (LogIn, Conversations, ConversationDetail, MessageComposer, ...)
+hooks/                           useSocket (shared Socket.IO client), useChatScroll, useKeysConversation
+lib/api.ts                       Thin wrappers around the Instagram Graph API
+store/                           Zustand stores + session/user persistence helpers
+server/index.js                  Custom server: Next.js request handler + Socket.IO, used by `pnpm dev`/`start`
+server/socket-server.js          Standalone alternative Socket.IO relay (port 4000, run separately)
+```
+
+### Architecture
+
+**Login flow** — `components/LogIn.tsx` builds the `https://www.instagram.com/oauth/authorize`
+URL and redirects the browser there. Instagram redirects back to `/` with a `?code=...` query
+param; `LogIn.tsx` posts that code to `POST /api/auth/exchange`, which exchanges it server-side
+for a short-lived token, then a long-lived token, and sets `access_token`/`expires_at` as
+HttpOnly cookies before redirecting to `/dashboard`. `app/dashboard/layout.tsx` and `app/page.tsx`
+both gate access by checking those cookies (server-side, in production only).
+
+**Data fetching** — `app/api/instagram/*` route handlers read the `access_token` cookie (or
+`NEXT_PUBLIC_ACCESS_TOKEN` in dev) and call the Graph API via `lib/api.ts`, so the raw token
+never reaches client-side JS.
+
+**Realtime messages** — Meta calls `POST /api/instagram/webhook` for new events. After verifying
+the `X-Hub-Signature-256` HMAC, that route forwards the raw payload to the Socket.IO server's
+`/broadcast` endpoint (`server/index.js`), which re-emits it to all connected browser clients as
+an `ig_event`. The dashboard subscribes via `hooks/useSocket.ts` and updates the relevant
+conversation in the Zustand store (`store/useConversationDetails.ts`).
+
 ## Todos
 
 - Check the errors and show error message
