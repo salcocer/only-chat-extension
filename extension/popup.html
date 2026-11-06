@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>OnlyChat</title>
+        <style>
+            :root {
+                --bg: #ffffff;
+                --text: #111111;
+                --muted: #6b6b6b;
+                --border: #e3e3e3;
+                --accent: #0b5cff;
+                color-scheme: light dark;
+            }
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --bg: #18181b;
+                    --text: #f4f4f5;
+                    --muted: #a1a1aa;
+                    --border: #33333a;
+                    --accent: #5b8cff;
+                }
+            }
+            body {
+                margin: 0;
+                width: 280px;
+                padding: 16px;
+                background: var(--bg);
+                color: var(--text);
+                font: 14px/1.4 system-ui, sans-serif;
+            }
+            h1 {
+                margin: 0 0 4px;
+                font-size: 16px;
+            }
+            p {
+                margin: 0 0 12px;
+                color: var(--muted);
+                font-size: 12px;
+            }
+            label {
+                display: flex;
+                gap: 10px;
+                align-items: flex-start;
+                padding: 10px 0;
+                border-top: 1px solid var(--border);
+                cursor: pointer;
+            }
+            label small {
+                display: block;
+                color: var(--muted);
+                font-size: 12px;
+            }
+            input {
+                margin-top: 3px;
+                accent-color: var(--accent);
+            }
+            button {
+                width: 100%;
+                margin-top: 8px;
+                padding: 8px;
+                border: 0;
+                border-radius: 8px;
+                background: var(--accent);
+                color: #ffffff;
+                font: inherit;
+                font-weight: 600;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>OnlyChat</h1>
+        <p>Instagram, just the messages.</p>
+
+        <label>
+            <input type="checkbox" name="enabled" />
+            <span>
+                Chat-only mode
+                <small>Send everything except Direct Messages back to the inbox.</small>
+            </span>
+        </label>
+        <label>
+            <input type="checkbox" name="allowSharedPosts" />
+            <span>
+                Allow shared posts and reels
+                <small>Open a single post or reel that someone sent you in a chat.</small>
+            </span>
+        </label>
+
+        <button id="open" type="button">Open Messages</button>
+
+        <script src="popup.js"></script>
+    </body>
+</html>
