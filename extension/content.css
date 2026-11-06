@@ -1,0 +1,8 @@
+/* Hide links to the parts of Instagram that OnlyChat blocks: Home, Explore, Reels and Threads. */
+html[data-onlychat='on'] a[href='/'],
+html[data-onlychat='on'] a[href='/explore/'],
+html[data-onlychat='on'] a[href='/reels/'],
+html[data-onlychat='on'] a[href*='threads.com'],
+html[data-onlychat='on'] a[href*='threads.net'] {
+    display: none !important;
+}
