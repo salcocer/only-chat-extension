@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "OnlyChat",
     "version": "0.1.0",
-    "description": "Use Instagram for Direct Messages only: no feed, Reels, Explore or Stories.",
+    "description": "Use Instagram for Direct Messages only: no feed, Reels or Explore. Stories only from the people you chat with.",
     "permissions": ["storage"],
     "action": {
         "default_title": "OnlyChat",
@@ -12,8 +12,14 @@
         {
             "matches": ["https://www.instagram.com/*", "https://instagram.com/*"],
             "js": ["content.js"],
-            "css": ["content.css"],
+            "css": ["content.css", "theme.css", "fonts/geist.css"],
             "run_at": "document_start"
+        },
+        {
+            "matches": ["https://www.instagram.com/*", "https://instagram.com/*"],
+            "js": ["stories.js", "notes.js", "profile.js"],
+            "world": "MAIN",
+            "run_at": "document_idle"
         }
     ]
 }

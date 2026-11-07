@@ -6,3 +6,21 @@ html[data-onlychat='on'] a[href*='threads.com'],
 html[data-onlychat='on'] a[href*='threads.net'] {
     display: none !important;
 }
+
+/* The Notes row at the top of the inbox (see notes.js). */
+html[data-onlychat='on'] [data-onlychat-notes] {
+    display: none !important;
+}
+
+/* Ring around the picture of a chat whose person has a story (see stories.js).
+   Drawn inside the picture, because Instagram clips anything outside it. */
+html[data-onlychat-stories='on'] img[data-onlychat-story] {
+    box-sizing: border-box;
+    padding: 3px;
+    border: 2.5px solid #d62976;
+    border-radius: 50%;
+    cursor: pointer;
+}
+html[data-onlychat-stories='on'] img[data-onlychat-story='seen'] {
+    border-color: #c7c7c7;
+}

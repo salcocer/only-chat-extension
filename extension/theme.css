@@ -1,0 +1,205 @@
+/* A shadcn/ui-style look for Instagram: neutral greys, near-black buttons and message bubbles,
+   thin borders and the Geist font (see fonts/geist.css).
+
+   Instagram colors almost everything through --ig-* variables that hold "r, g, b" triples,
+   so overriding them restyles the page without touching its markup or behavior. The values are
+   shadcn/ui's neutral palette. !important is needed because Instagram declares the variables
+   with selectors that are more specific than these. */
+
+html[data-onlychat='on'] {
+    /* Backgrounds */
+    --ig-primary-background: 255, 255, 255 !important;
+    --ig-secondary-background: 245, 245, 245 !important;
+    --ig-highlight-background: 245, 245, 245 !important;
+    --ig-elevated-background: 255, 255, 255 !important;
+    --ig-secondary-elevated-background: 245, 245, 245 !important;
+    --ig-elevated-highlight-background: 245, 245, 245 !important;
+    --ig-dropdown-background: 245, 245, 245 !important;
+    --ig-menu-background-color: 255, 255, 255 !important;
+    --ig-banner-background: 255, 255, 255 !important;
+    --ig-bubble-background: 255, 255, 255 !important;
+    --ig-input-disabled-background-color: 245, 245, 245 !important;
+    --ig-temporary-highlight: 245, 245, 245 !important;
+    --ig-background-blur: 255, 255, 255, 0.8 !important;
+    --ig-hover-overlay: 0, 0, 0, 0.04 !important;
+
+    /* Text and icons */
+    --ig-primary-text: 10, 10, 10 !important;
+    --ig-menu-text-color: 10, 10, 10 !important;
+    --ig-input-text-and-icon-primary: 10, 10, 10 !important;
+    --ig-primary-icon: 10, 10, 10 !important;
+    --ig-secondary-text: 115, 115, 115 !important;
+    --ig-input-text-and-icon-secondary: 115, 115, 115 !important;
+    --ig-secondary-icon: 115, 115, 115 !important;
+    --ig-tertiary-text: 163, 163, 163 !important;
+    --ig-tertiary-icon: 163, 163, 163 !important;
+    --ig-text-on-color: 250, 250, 250 !important;
+    --ig-error-or-destructive: 231, 0, 11 !important;
+
+    /* Borders */
+    --ig-separator: 229, 229, 229 !important;
+    --ig-elevated-separator: 229, 229, 229 !important;
+    --ig-stroke: 229, 229, 229 !important;
+    --ig-input-border-secondary: 229, 229, 229 !important;
+    --ig-text-input-border-prism: 229, 229, 229 !important;
+    --ig-input-border-primary: 161, 161, 161 !important;
+    --ig-text-input-border-hover-prism: 161, 161, 161 !important;
+    --ig-focus-stroke: 161, 161, 161 !important;
+
+    /* Buttons and links: near-black instead of Instagram blue */
+    --ig-primary-button: 23, 23, 23 !important;
+    --ig-primary-button-hover: 38, 38, 38 !important;
+    --ig-colors-button-primary-background: 23, 23, 23 !important;
+    --ig-colors-button-primary-background--hover: 38, 38, 38 !important;
+    --ig-colors-button-primary-background--pressed: 64, 64, 64 !important;
+    --ig-colors-button-primary-background--disabled: 163, 163, 163 !important;
+    --ig-colors-button-primary-text: 250, 250, 250 !important;
+    --ig-colors-button-secondary-background: 245, 245, 245 !important;
+    --ig-colors-button-secondary-background--hover: 229, 229, 229 !important;
+    --ig-colors-button-secondary-background--pressed: 212, 212, 212 !important;
+    --ig-colors-button-secondary-background--disabled: 245, 245, 245 !important;
+    --ig-colors-button-secondary-elevated-background: 245, 245, 245 !important;
+    --ig-colors-button-secondary-text: 23, 23, 23 !important;
+    --ig-colors-button-secondary-text--disabled: 163, 163, 163 !important;
+    --ig-secondary-button: 23, 23, 23 !important;
+    --ig-secondary-button-background: 245, 245, 245 !important;
+    --ig-secondary-button-hover: 229, 229, 229 !important;
+    --ig-tertiary-button-background: 255, 255, 255 !important;
+    --ig-tertiary-button-border: 229, 229, 229 !important;
+    --ig-tertiary-button-hover: 245, 245, 245 !important;
+    --ig-tertiary-button-text: 23, 23, 23 !important;
+    --ig-link: 23, 23, 23 !important;
+    --ig-colors-link-text: 23, 23, 23 !important;
+    --ig-colors-button-borderless-text: 23, 23, 23 !important;
+    --ig-colors-button-borderless-text--hover: 64, 64, 64 !important;
+    --ig-colors-button-borderless-text--pressed: 82, 82, 82 !important;
+    --ig-colors-button-borderless-text--disabled: 163, 163, 163 !important;
+    --ig-colors-button-primary-link-text: 23, 23, 23 !important;
+    --ig-colors-button-primary-link-text--hover: 64, 64, 64 !important;
+    --ig-colors-button-primary-link-text--pressed: 82, 82, 82 !important;
+    --ig-colors-button-primary-link-text--disabled: 163, 163, 163 !important;
+    --ig-colors-button-secondary-link-text: 23, 23, 23 !important;
+    --ig-colors-button-secondary-link-text--hover: 64, 64, 64 !important;
+    --ig-colors-button-secondary-link-text--pressed: 82, 82, 82 !important;
+    --ig-colors-button-secondary-link-text--disabled: 163, 163, 163 !important;
+    --ig-toggle-background-on-prism: 23, 23, 23 !important;
+    --ig-toggle-background-off-prism: 229, 229, 229 !important;
+
+    /* Message bubbles */
+    --ig-outgoing-message-bubble: 23, 23, 23 !important;
+    --ig-incoming-message-bubble: 245, 245, 245 !important;
+
+    /* Font */
+    --font-family-system: var(--onlychat-font) !important;
+    --font-family-system-prism: var(--onlychat-font) !important;
+    --font-family-default: var(--onlychat-font) !important;
+    --onlychat-font: Geist, ui-sans-serif, system-ui, sans-serif;
+}
+
+html[data-onlychat='on'].__fb-dark-mode {
+    --ig-primary-background: 10, 10, 10 !important;
+    --ig-secondary-background: 38, 38, 38 !important;
+    --ig-highlight-background: 38, 38, 38 !important;
+    --ig-elevated-background: 23, 23, 23 !important;
+    --ig-secondary-elevated-background: 38, 38, 38 !important;
+    --ig-elevated-highlight-background: 38, 38, 38 !important;
+    --ig-dropdown-background: 38, 38, 38 !important;
+    --ig-menu-background-color: 23, 23, 23 !important;
+    --ig-banner-background: 23, 23, 23 !important;
+    --ig-bubble-background: 23, 23, 23 !important;
+    --ig-input-disabled-background-color: 38, 38, 38 !important;
+    --ig-temporary-highlight: 38, 38, 38 !important;
+    --ig-background-blur: 10, 10, 10, 0.8 !important;
+    --ig-hover-overlay: 255, 255, 255, 0.06 !important;
+
+    --ig-primary-text: 250, 250, 250 !important;
+    --ig-menu-text-color: 250, 250, 250 !important;
+    --ig-input-text-and-icon-primary: 250, 250, 250 !important;
+    --ig-primary-icon: 250, 250, 250 !important;
+    --ig-secondary-text: 161, 161, 161 !important;
+    --ig-input-text-and-icon-secondary: 161, 161, 161 !important;
+    --ig-secondary-icon: 161, 161, 161 !important;
+    --ig-tertiary-text: 115, 115, 115 !important;
+    --ig-tertiary-icon: 115, 115, 115 !important;
+    --ig-text-on-color: 23, 23, 23 !important;
+    --ig-error-or-destructive: 255, 100, 103 !important;
+
+    --ig-separator: 38, 38, 38 !important;
+    --ig-elevated-separator: 38, 38, 38 !important;
+    --ig-stroke: 38, 38, 38 !important;
+    --ig-input-border-secondary: 46, 46, 46 !important;
+    --ig-text-input-border-prism: 46, 46, 46 !important;
+    --ig-input-border-primary: 115, 115, 115 !important;
+    --ig-text-input-border-hover-prism: 115, 115, 115 !important;
+    --ig-focus-stroke: 115, 115, 115 !important;
+
+    --ig-primary-button: 229, 229, 229 !important;
+    --ig-primary-button-hover: 212, 212, 212 !important;
+    --ig-colors-button-primary-background: 229, 229, 229 !important;
+    --ig-colors-button-primary-background--hover: 212, 212, 212 !important;
+    --ig-colors-button-primary-background--pressed: 163, 163, 163 !important;
+    --ig-colors-button-primary-background--disabled: 64, 64, 64 !important;
+    --ig-colors-button-primary-text: 23, 23, 23 !important;
+    --ig-colors-button-secondary-background: 38, 38, 38 !important;
+    --ig-colors-button-secondary-background--hover: 64, 64, 64 !important;
+    --ig-colors-button-secondary-background--pressed: 82, 82, 82 !important;
+    --ig-colors-button-secondary-background--disabled: 38, 38, 38 !important;
+    --ig-colors-button-secondary-elevated-background: 38, 38, 38 !important;
+    --ig-colors-button-secondary-text: 250, 250, 250 !important;
+    --ig-colors-button-secondary-text--disabled: 115, 115, 115 !important;
+    --ig-secondary-button: 250, 250, 250 !important;
+    --ig-secondary-button-background: 38, 38, 38 !important;
+    --ig-secondary-button-hover: 64, 64, 64 !important;
+    --ig-tertiary-button-background: 10, 10, 10 !important;
+    --ig-tertiary-button-border: 38, 38, 38 !important;
+    --ig-tertiary-button-hover: 38, 38, 38 !important;
+    --ig-tertiary-button-text: 250, 250, 250 !important;
+    --ig-link: 250, 250, 250 !important;
+    --ig-colors-link-text: 250, 250, 250 !important;
+    --ig-colors-button-borderless-text: 250, 250, 250 !important;
+    --ig-colors-button-borderless-text--hover: 212, 212, 212 !important;
+    --ig-colors-button-borderless-text--pressed: 163, 163, 163 !important;
+    --ig-colors-button-borderless-text--disabled: 115, 115, 115 !important;
+    --ig-colors-button-primary-link-text: 250, 250, 250 !important;
+    --ig-colors-button-primary-link-text--hover: 212, 212, 212 !important;
+    --ig-colors-button-primary-link-text--pressed: 163, 163, 163 !important;
+    --ig-colors-button-primary-link-text--disabled: 115, 115, 115 !important;
+    --ig-colors-button-secondary-link-text: 250, 250, 250 !important;
+    --ig-colors-button-secondary-link-text--hover: 212, 212, 212 !important;
+    --ig-colors-button-secondary-link-text--pressed: 163, 163, 163 !important;
+    --ig-colors-button-secondary-link-text--disabled: 115, 115, 115 !important;
+    --ig-toggle-background-on-prism: 229, 229, 229 !important;
+    --ig-toggle-background-off-prism: 64, 64, 64 !important;
+
+    --ig-outgoing-message-bubble: 229, 229, 229 !important;
+    --ig-incoming-message-bubble: 38, 38, 38 !important;
+}
+
+html[data-onlychat='on'],
+html[data-onlychat='on'] body,
+html[data-onlychat='on'] input,
+html[data-onlychat='on'] textarea,
+html[data-onlychat='on'] button {
+    font-family: var(--onlychat-font) !important;
+}
+
+/* Inputs: a thin border and small radius, like shadcn's <Input>, instead of a grey pill. */
+html[data-onlychat='on'] :has(> input[type='text']) {
+    border: 1px solid rgb(var(--ig-input-border-secondary)) !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+}
+html[data-onlychat='on'] input[type='text'] {
+    background: transparent !important;
+}
+html[data-onlychat='on'] :has(> input[type='text']:focus) {
+    border-color: rgb(var(--ig-focus-stroke)) !important;
+    box-shadow: 0 0 0 3px rgba(var(--ig-focus-stroke), 0.3) !important;
+}
+
+/* The message box: a rounded rectangle instead of a pill. Its border and background sit a few
+   levels above the text field, which has no stable class of its own. */
+html[data-onlychat='on'] :has(> * > * > [role='textbox'][contenteditable='true']),
+html[data-onlychat='on'] :has(> * > * > * > * > [role='textbox'][contenteditable='true']) {
+    border-radius: 10px !important;
+}

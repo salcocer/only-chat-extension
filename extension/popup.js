@@ -1,5 +1,5 @@
 // Must match DEFAULTS in content.js.
-const DEFAULTS = { enabled: true, allowSharedPosts: true };
+const DEFAULTS = { enabled: true, allowSharedPosts: true, allowStories: true, allowOwnProfile: true };
 
 const inputs = document.querySelectorAll('input[name]');
 
