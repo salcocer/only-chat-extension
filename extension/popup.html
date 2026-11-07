@@ -51,9 +51,41 @@
                 color: var(--muted);
                 font-size: 12px;
             }
-            input {
+            input[type='checkbox'] {
                 margin-top: 3px;
                 accent-color: var(--accent);
+            }
+            #mail-settings {
+                display: grid;
+                gap: 8px;
+                padding: 0 0 10px 23px;
+            }
+            #mail-settings[hidden] {
+                display: none;
+            }
+            #mail-settings span {
+                display: grid;
+                gap: 3px;
+                color: var(--muted);
+                font-size: 12px;
+            }
+            #mail-settings input {
+                box-sizing: border-box;
+                width: 100%;
+                padding: 6px 8px;
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                background: var(--bg);
+                color: var(--text);
+                font: inherit;
+                font-size: 12px;
+            }
+            #mail-status {
+                margin: 0;
+                font-size: 12px;
+            }
+            #mail-status[data-ok='false'] {
+                color: #dc2626;
             }
             button {
                 width: 100%;
@@ -101,6 +133,25 @@
                 <small>Open your own profile from the sidebar. Everyone else's stays blocked.</small>
             </span>
         </label>
+
+        <label>
+            <input type="checkbox" name="emailBridge" />
+            <span>
+                Connect to email
+                <small>Get new messages by email and answer them with Reply. Needs the bridge running on this computer.</small>
+            </span>
+        </label>
+        <div id="mail-settings" hidden>
+            <span>
+                Bridge address
+                <input id="bridge-url" type="url" placeholder="http://127.0.0.1:3789" spellcheck="false" />
+            </span>
+            <span>
+                Bridge secret
+                <input id="bridge-secret" type="password" placeholder="IG_BRIDGE_SECRET from the bridge's .env" autocomplete="off" />
+            </span>
+            <p id="mail-status"></p>
+        </div>
 
         <button id="open" type="button">Open Messages</button>
 
